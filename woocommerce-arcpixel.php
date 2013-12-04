@@ -62,34 +62,34 @@ class RecentOrders_API_Endpoint{
 		global $wp;
 		$orders = $wp->query_vars['orders'];
 		if(!$orders) {
-            $orders = get_option('posts_per_page');  
+            		$orders = get_option('posts_per_page');  
 		}			
 		
 		$args = array(
-            'post_type' => 'shop_order',
-            'post_status' => 'publish',            
-            'posts_per_page' => -1,
-            'order'     => 'DESC',
-            'orderby'   => 'ID'
-        );
+            		'post_type' => 'shop_order',
+            		'post_status' => 'publish',            
+            		'posts_per_page' => -1,
+            		'order'     => 'DESC',
+            		'orderby'   => 'ID'
+        	);
         
-        $my_query = new WP_Query($args);
+        	$my_query = new WP_Query($args);
         
-        $customer_orders = $my_query->posts;
+        	$customer_orders = $my_query->posts;
         
-        $orders = array();
+        	$orders = array();
         
-        foreach ($customer_orders as $customer_order) {
-            $order = new WC_Order();            
-            $order->populate($customer_order);
-            $orders[] = $order;                    
-        }
+        	foreach ($customer_orders as $customer_order) {
+            		$order = new WC_Order();            
+            		$order->populate($customer_order);
+            		$orders[] = $order;                    
+        	}
         
-        if(is_array($orders) && count($orders > 0)) {            
-            $this->send_response('200 OK', json_encode($orders));
-        } else {            
+        	if(is_array($orders) && count($orders > 0)) {            
+            		$this->send_response('200 OK', json_encode($orders));
+        	} else {            
 			$this->send_response('Something went wrong!');
-        }
+        	}
 	}
 	
 	/** Response Handler
